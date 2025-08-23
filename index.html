@@ -104,10 +104,56 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white p-6 text-center">
-        &copy; 2025 Advisor Training Panel. All Rights Reserved.
-    </footer>
+    <footer class="bg-gray-800 text-white p-12 relative overflow-hidden">
+    <!-- Centered interactive logo -->
+    <div class="flex justify-center mb-6 relative">
+        <!-- Outer animated glowing circles -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="rounded-full bg-white opacity-20 w-48 h-48 animate-ping-slow blur-2xl"></div>
+            <div class="rounded-full bg-white opacity-10 w-64 h-64 animate-pulse-slow blur-3xl"></div>
+            <div class="rounded-full bg-white opacity-5 w-80 h-80 animate-spin-slow"></div>
+        </div>
+
+        <!-- Logo container -->
+        <div class="relative rounded-full bg-gradient-to-r from-white/90 via-gray-200/60 to-white/90 p-6 sm:p-8 md:p-10 shadow-2xl transform transition-transform duration-700 hover:scale-110 hover:rotate-3">
+            <img src="Untitled-transformed__1_-removebg-preview.png" 
+                 alt="Main Logo" 
+                 class="relative h-32 sm:h-40 md:h-48 w-auto animate-float">
+        </div>
+    </div>
+
+    <!-- Footer Text -->
+    <p class="text-center text-gray-200 text-lg">&copy; 2025 Advisor Training Panel. All Rights Reserved.</p>
+
+    <!-- Custom Animations -->
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        @keyframes ping-slow {
+            0% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.2; }
+        }
+        .animate-ping-slow { animation: ping-slow 4s infinite; }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+        .animate-pulse-slow { animation: pulse-slow 5s infinite; }
+
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+    </style>
+</footer>
+
 
     <script>lucide.createIcons();</script>
 </body>
