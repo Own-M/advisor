@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: এই SPA-টি বিশেষভাবে কথোপকথন অনুশীলনের জন্য ডিজাইন করা হয়েছে। এটি একটি চ্যাট সিমুলেশন ইন্টারফেস ব্যবহার করে, যেখানে ব্যবহারকারী (অ্যাডভাইজর) ক্লায়েন্টের সম্ভাব্য উত্তরগুলোতে ক্লিক করে কথোপকথনটি এগিয়ে নিয়ে যান। এই ইন্টারঅ্যাক্টিভ পদ্ধতিটি মুখস্থ করার পরিবর্তে বাস্তব অনুশীলনের উপর জোর দেয়। পেজটি দুটি প্রধান অংশে বিভক্ত: (১) সম্পূর্ণ বিক্রয় স্ক্রিপ্ট এবং (২) সাধারণ প্রশ্ন ও আপত্তি মোকাবেলা, যা অ্যাডভাইজরদের প্রতিটি পরিস্থিতি আলাদাভাবে অনুশীলন করতে সাহায্য করে। -->
+    <!-- Visualization & Content Choices: 
+        - Interactive Chat Simulation (HTML/JS): Goal: Organize/Inform. Method: একটি চ্যাট বক্স এবং ইন্টারেক্টিভ বাটন ব্যবহার করে কথোপকথনের প্রবাহ নিয়ন্ত্রণ করা হয়। ব্যবহারকারী একটি বাটনে ক্লিক করলে পরবর্তী স্ক্রিপ্ট চ্যাট বক্সে প্রদর্শিত হয়। Justification: এই পদ্ধতিটি নিষ্ক্রিয়ভাবে পড়ার চেয়ে অনেক বেশি আকর্ষণীয় এবং কার্যকরী। এটি অ্যাডভাইজরদের কথোপকথনের প্রবাহ এবং প্রতিটি ধাপের উদ্দেশ্য আরও ভালোভাবে বুঝতে সাহায্য করে।
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>Gainers Future - ইন্টারেক্টিভ কথোপকথন অনুশীলন</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tiro+Bangla&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+            color: #1e293b;
+        }
+        .bangla {
+            font-family: 'Tiro Bangla', serif;
+        }
+        .chat-box {
+            height: 60vh;
+            max-height: 500px;
+        }
+        .advisor-bubble {
+            background-color: #e0f2fe; /* sky-100 */
+            align-self: flex-start;
+            max-width: 80%;
+        }
+        .client-bubble {
+            background-color: #ffffff;
+            align-self: flex-end;
+            max-width: 80%;
+        }
+        .response-btn {
+            background-color: #3b82f6; /* blue-500 */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .response-btn:hover {
+            background-color: #2563eb; /* blue-600 */
+        }
+        .section-divider {
+            border-top: 2px dashed #cbd5e1;
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-blue-700 bangla text-center">ইন্টারেক্টিভ কথোপকথন অনুশীলন</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-6 py-12">
+
+        <!-- Section 1: Full Conversation Script -->
+        <section id="full-script">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4 bangla">সম্পূর্ণ কথোপকথন অনুশীলন</h2>
+                <p class="text-slate-600 text-base md:text-lg bangla">একজন ক্লায়েন্টের ভূমিকায় থেকে কথোপকথনটি শুরু করুন এবং প্রতিটি ধাপে সঠিক উত্তরটি বেছে নিন।</p>
+            </div>
+
+            <div class="mt-8 max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-4 md:p-6">
+                <div id="chat-box-sales" class="chat-box w-full flex flex-col gap-4 p-4 overflow-y-auto bg-slate-50 rounded-lg">
+                    <!-- Messages will be appended here -->
+                </div>
+                <div id="buttons-sales" class="mt-4 flex flex-wrap justify-center gap-3">
+                    <!-- Response buttons will be appended here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Section 2: Objection Handling -->
+        <section id="objections">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4 bangla">সাধারণ প্রশ্ন ও আপত্তি মোকাবেলা</h2>
+                <p class="text-slate-600 text-base md:text-lg bangla">ক্লায়েন্টের সাধারণ প্রশ্নগুলো আত্মবিশ্বাসের সাথে মোকাবেলা করার জন্য অনুশীলন করুন। একটি প্রশ্ন নির্বাচন করুন।</p>
+            </div>
+
+            <div class="mt-8 max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-4 md:p-6">
+                <div id="chat-box-objections" class="chat-box w-full flex flex-col gap-4 p-4 overflow-y-auto bg-slate-50 rounded-lg">
+                    <!-- Objection messages will be appended here -->
+                </div>
+                <div id="buttons-objections" class="mt-4 flex flex-wrap justify-center gap-3">
+                    <!-- Objection buttons will be appended here -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-800 text-slate-300 mt-16">
+        <div class="container mx-auto px-6 py-8 text-center bangla">
+            <p>&copy; ২০২৪ Gainers Future অ্যাডভাইজর ট্রেনিং। শুধুমাত্র অভ্যন্তরীণ ব্যবহারের জন্য।</p>
+        </div>
+    </footer>
+
+<script>
+    const salesChatBox = document.getElementById('chat-box-sales');
+    const salesButtons = document.getElementById('buttons-sales');
+    const objectionsChatBox = document.getElementById('chat-box-objections');
+    const objectionsButtons = document.getElementById('buttons-objections');
+
+    function addMessage(box, sender, text) {
+        const bubble = document.createElement('div');
+        bubble.className = `p-3 rounded-lg bangla ${sender === 'advisor' ? 'advisor-bubble' : 'client-bubble'}`;
+        bubble.innerHTML = text;
+        box.appendChild(bubble);
+        box.scrollTop = box.scrollHeight;
+    }
+
+    function createButton(container, text, onclickFunction) {
+        const button = document.createElement('button');
+        button.className = 'response-btn bangla py-2 px-4 rounded-lg font-semibold';
+        button.innerHTML = text;
+        button.onclick = onclickFunction;
+        container.appendChild(button);
+    }
+
+    const script = {
+        start: {
+            advisor: 'কথোপকথন শুরু করুন:',
+            options: [
+                { text: 'ক্লায়েন্ট সাপোর্ট ফর্ম পূরণ করেছেন', next: 'step1_form' },
+                { text: 'ক্লায়েন্ট সরাসরি কল করেছেন', next: 'step1_direct' }
+            ]
+        },
+        step1_form: {
+            advisor: 'আসসালামু আলাইকুম, Gainers Future থেকে বলছিলাম। আপনি আমাদের সাপোর্ট ফর্ম পূরণ করেছিলেন, মাস্টার্স এর স্কলারশিপ সম্পর্কে জানতে। আপনার কি এখন একটু সময় হবে? আমি আপনাকে বিস্তারিত জানাতে চাই।',
+            options: [
+                { text: 'ক্লায়েন্ট: হ্যাঁ, বলুন।', next: 'step2_intro' }
+            ]
+        },
+        step1_direct: {
+            advisor: 'কিভাবে সাহায্য করতে পারি?',
+            options: [
+                { text: 'ক্লায়েন্ট: আমি স্কলারশিপ নিয়ে জানতে চাই।', next: 'step2_intro' }
+            ]
+        },
+        step2_intro: {
+            advisor: 'চমৎকার! First of all, একটা বিষয় পরিষ্কার করে বলতে চাই, Gainers Future কোনো সাধারণ agency না। আমরা world wide যত ফুল ফান্ডেড স্কলারশিপ আছে, শুধু সেগুলো নিয়েই কাজ করি। অর্থাৎ, যেখানে আপনার কোনো টিউশন ফি লাগবে না এবং আপনি থাকা-খাওয়ার জন্য ভালো একটা স্টাইপেন্ড পাবেন। <br><br> আচ্ছা, আপনাকে সবচেয়ে ভালোভাবে সাহায্য করার জন্য, আপনার প্রোফাইল সম্পর্কে আমাকে একটু বলুন।',
+            options: [
+                { text: 'ক্লায়েন্ট: আমি গ্র্যাজুয়েশন করেছি...', next: 'step2_profile_given' }
+            ]
+        },
+        step2_profile_given: {
+            client: 'আমি গ্র্যাজুয়েশন করেছি, CGPA 3.5, IELTS 6.5 আছে। ২ বছরের কাজের অভিজ্ঞতাও আছে।',
+            advisor: 'Great! আপনার প্রোফাইলটি বেশ শক্তিশালী। এই ধরনের প্রোফাইলের জন্য ভালো সুযোগ থাকে। আপনি যদি কিছু মনে না করেন, আপনাকে একটি প্রশ্ন করতে পারি? আপনার নিজের অভিজ্ঞতা থেকে, স্কলারশিপ পাওয়ার জন্য সবচেয়ে বড় চ্যালেঞ্জ কি মনে হয়?',
+            options: [
+                { text: 'ক্লায়েন্ট: সঠিক গাইডলাইন পাই না...', next: 'step3_solution' }
+            ]
+        },
+        step3_solution: {
+            client: 'সঠিক গাইডলাইন পাই না, আর প্রসেসটা খুব জটিল মনে হয়। প্রফেসরদের কাছে কিভাবে পৌঁছাবো, সেটাও ঠিক বুঝি না।',
+            advisor: 'আপনি একদম মূল সমস্যাটির কথাই বলেছেন। সত্যি বলতে, আমাদের দেশে অনেক এজেন্সি আছে যারা Self Fund নিয়ে কাজ করে, যেখানে স্টুডেন্টদের কোটি টাকা খরচ হয়। এই সহজ লাভের জন্য তারা ফুল ফান্ডেড স্কলারশিপের বিষয়টা ইচ্ছা করেই আড়াল করে রাখে। <br><br> এর ফলে আপনার বলা সমস্যাগুলোই তৈরি হয়: <strong>Lack of Guidance, No Transparency, High Payment,</strong> আর <strong>Time Shortage.</strong> <br><br> আমরা ঠিক এই সমস্যাগুলোই সমাধান করছি। আমরা আপনার অ্যাপ্লিকেশন পার্টনার হিসেবে কাজ করি, যেখানে পুরো প্রক্রিয়াটি আপনার অংশগ্রহণের মাধ্যমে সম্পন্ন হয়।',
+            options: [
+                { text: 'পরবর্তী ধাপ »', next: 'step4_process' }
+            ]
+        },
+        step4_process: {
+            advisor: 'আমাদের full assistant program-এ আপনাকে প্রথমেই আমাদের Tracking System-এ যুক্ত করা হবে, যেখানে প্রতিটি কাজের আপডেট আপনি লাইভ দেখতে পারবেন। <br><br> <strong>রিসার্চ টিম:</strong> আপনার প্রোফাইল অনুযায়ী ইউনিভার্সিটি ও প্রফেসর লিস্ট তৈরি করবে। <br> <strong>ইমেইল টিম:</strong> আপনার হয়ে প্রফেসরদের সাথে প্রফেশনালভাবে যোগাযোগ করবে এবং মিটিং ঠিক করবে। <br> <strong>ডকুমেন্টেশন টিম:</strong> আপনার সাথে কাজ করে একটি শক্তিশালী SOP, LOR এবং CV তৈরি করবে।',
+            options: [
+                { text: 'ক্লায়েন্ট: আমার কী করতে হবে?', next: 'step4_contribution' }
+            ]
+        },
+        step4_contribution: {
+            client: 'পুরো প্রক্রিয়াটি আপনারা ম্যানেজ করবেন? আমার কী করতে হবে?',
+            advisor: 'হ্যাঁ, আমরা পুরো প্রক্রিয়াটি ম্যানেজ করবো, কিন্তু আপনার সক্রিয় অংশগ্রহণ এবং ফিডব্যাক প্রয়োজন হবে। যেমন, ডকুমেন্টেশনের জন্য আমরা আপনাকে একটি রিটেন টাস্ক দেবো। প্রফেসর ফান্ডিং নিশ্চিত হলে, আমরা আপনার আবেদন সাবমিট করে দেবো।',
+            options: [
+                { text: 'ক্লায়েন্ট: আপনাদের সার্ভিস চার্জ কত?', next: 'step5_investment' }
+            ]
+        },
+        step5_investment: {
+            client: 'আচ্ছা, তাহলে আপনাদের সার্ভিস চার্জ কতো?',
+            advisor: 'আমরা খুবই সাশ্রয়ী মূল্যে দুটি প্যাকেজ অফার করি: একটি ২৫ হাজার এবং অন্যটি ৫০ হাজার টাকা। Elite প্যাকেজটিতে ভিসা সাপোর্টসহ সবকিছু অন্তর্ভুক্ত। <br><br> আপনি পেমেন্ট কয়েকটি কিস্তিতে দিতে পারবেন। যেমন, এনরোলমেন্টের সময় একটি অংশ, ডকুমেন্টেশন শেষ হলে আরেকটি, এবং ইমেইলিং শেষে বাকিটা। <br><br> আরেকটি গুরুত্বপূর্ণ বিষয় হলো, আমরা আপনার অ্যাপ্লিকেশন ফি মওকুফ করার জন্য সর্বোচ্চ চেষ্টা করি, যা আপনার প্রায় ১ থেকে ১.৫ লক্ষ টাকা বাঁচিয়ে দিতে পারে।',
+            options: [
+                { text: 'ক্লায়েন্ট: আমাকে একটু ভাবতে হবে।', next: 'step6_closing' }
+            ]
+        },
+        step6_closing: {
+            client: 'আমাকে একটু ভাবতে হবে।',
+            advisor: 'অবশ্যই। এটি একটি গুরুত্বপূর্ণ সিদ্ধান্ত, তাই সময় নিয়ে ভাবাটাই স্বাভাবিক। তবে, স্কলারশিপের আবেদন খুবই সময়-নির্ভর একটি প্রক্রিয়া। প্রফেসরদের ফান্ডিং এবং ইউনিভার্সিটির আসন সীমিত থাকে। যারা আগে যোগাযোগ করে, তারা সবসময় এগিয়ে থাকে। <br><br> আমাদের এই সপ্তাহের স্লট প্রায় শেষ। আপনি যদি আপনার স্বপ্ন পূরণের দিকে প্রথম ধাপটি নিতে চান, তাহলে এখনই সেরা সময়।',
+            options: [
+                { text: 'অনুশীলনটি পুনরায় শুরু করুন', next: 'start' }
+            ]
+        }
+    };
+
+    function displayStep(step) {
+        salesButtons.innerHTML = '';
+        const currentStep = script[step];
+
+        if (currentStep.client) {
+            addMessage(salesChatBox, 'client', currentStep.client);
+        }
+        
+        setTimeout(() => {
+            if (currentStep.advisor) {
+                addMessage(salesChatBox, 'advisor', currentStep.advisor);
+            }
+            if (currentStep.options) {
+                currentStep.options.forEach(option => {
+                    createButton(salesButtons, option.text, () => {
+                        if (option.next === 'start') {
+                            salesChatBox.innerHTML = '';
+                        }
+                        displayStep(option.next);
+                    });
+                });
+            }
+        }, currentStep.client ? 1000 : 100);
+    }
+
+    const objections = {
+        cost: {
+            question: 'খরচ বেশি মনে হচ্ছে।',
+            answer: 'আমি বুঝতে পারছি। তবে এটিকে খরচ না ভেবে ভবিষ্যতের জন্য একটি বিনিয়োগ হিসেবে দেখুন। এই বিনিয়োগের মাধ্যমে আপনি যখন একটি ফুল-ফান্ডেড স্কলারশিপ পাবেন, তখন আপনার লক্ষ লক্ষ টাকা সাশ্রয় হবে, যা এই খরচের তুলনায় অনেক বেশি।'
+        },
+        success: {
+            question: 'সফলতার নিশ্চয়তা কী?',
+            answer: 'এটি খুবই গুরুত্বপূর্ণ একটি প্রশ্ন। সত্যি বলতে, স্কলারশিপের ১০০% নিশ্চয়তা কেউ দিতে পারে না, কারণ চূড়ান্ত সিদ্ধান্তটি প্রফেসর এবং বিশ্ববিদ্যালয় নিয়ে থাকে। তবে, আমরা অভিজ্ঞ টিম এবং আমাদের পূর্বের ৮৫% ক্লায়েন্ট সফল হয়েছেন। আমরা গ্যারান্টি দিচ্ছি যে আপনার প্রোফাইল অনুযায়ী সেরা অ্যাপ্লিকেশনটি তৈরি করা হবে, যা আপনার সফলতার সম্ভাবনা বহুগুণ বাড়িয়ে দেবে।'
+        },
+        office: {
+            question: 'আপনাদের অফিস কোথায়? আমি সরাসরি কথা বলতে চাই।',
+            answer: 'অবশ্যই। আমাদের মিরপুর এবং উত্তরায় এক্সিকিউটিভ অফিস আছে। আমাদের এক্সিকিউটিভরা প্রতি শনিবার ক্লায়েন্টদের সাথে সাক্ষাৎ করেন। যদি এই সপ্তাহে স্লট খালি থাকে, তাহলে আমি আপনার জন্য একটি অ্যাপয়েন্টমেন্ট ঠিক করে দিতে পারি।'
+        },
+        time: {
+            question: 'পুরো প্রক্রিয়াটি শেষ হতে কতদিন সময় লাগবে?',
+            answer: 'আমরা একটি নির্দিষ্ট টাইমফ্রেম অনুসরণ করি। সাধারণত, আপনার সব ডকুমেন্টস রেডি করতে এবং প্রফেসরদের সাথে প্রাথমিক যোগাযোগ স্থাপন করতে আমাদের প্রায় ২ মাস সময় লাগে। এরপর বিশ্ববিদ্যালয়ের ডেডলাইন অনুযায়ী আবেদন করা হয়।'
+        }
+    };
+
+    function displayObjection(key) {
+        objectionsChatBox.innerHTML = '';
+        addMessage(objectionsChatBox, 'client', objections[key].question);
+        setTimeout(() => {
+            addMessage(objectionsChatBox, 'advisor', objections[key].answer);
+        }, 1000);
+    }
+
+    function initializeObjections() {
+        objectionsButtons.innerHTML = '';
+        addMessage(objectionsChatBox, 'advisor', 'অনুশীলনের জন্য একটি প্রশ্ন নির্বাচন করুন।');
+        for (const key in objections) {
+            createButton(objectionsButtons, objections[key].question, () => displayObjection(key));
+        }
+    }
+
+    // Initial load
+    displayStep('start');
+    initializeObjections();
+
+</script>
+
+</body>
+</html>
