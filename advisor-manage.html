@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Lead & Advisor Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f0f4f8; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        .view { display: none; }
+        .kanban-column { min-height: 60vh; }
+        .lead-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+        .lead-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .gemini-loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #a21caf;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Login View -->
+    <div id="auth-view" class="view min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-white p-8 rounded-2xl shadow-lg text-center">
+            <h2 class="text-3xl font-bold mb-2">Welcome Back</h2>
+            <p class="text-slate-600 mb-8">Sign in to continue</p>
+            <button id="google-signin-btn" class="w-full bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-lg flex items-center justify-center gap-3 transition-all duration-300">
+                <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.012,36.49,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                Sign in with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Team Leader Dashboard View -->
+    <div id="leader-dashboard" class="view">
+        <header class="bg-white shadow-md sticky top-0 z-30">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Team Leader Dashboard</h1>
+                <button id="leader-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-sm">Logout</button>
+            </div>
+        </header>
+        <main class="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Registered Advisors</h2>
+                    <ul id="advisor-list" class="space-y-2 max-h-60 overflow-y-auto"></ul>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Performance Summary (AI)</h2>
+                    <p class="text-sm text-slate-600 mb-4">যেকোনো অ্যাডভাইজরের পারফরম্যান্স সারাংশ তৈরি করুন।</p>
+                    <select id="gemini-advisor-select" class="block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3 mb-3"></select>
+                    <button id="generate-summary-btn" class="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                        <span id="gemini-btn-text">Generate Summary</span>
+                        <div id="gemini-loader" class="gemini-loader hidden"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Manage Leads</h2>
+                <div class="mb-6 border-b pb-6">
+                    <h3 class="font-semibold mb-2">Bulk Import Leads (CSV)</h3>
+                    <input type="file" id="csv-file-input" accept=".csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"/>
+                    <p class="text-xs text-slate-500 mt-1">CSV format: clientName,clientNumber</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2">Unassigned Leads</h3>
+                    <div id="unassigned-leads-list" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
+                    <div class="mt-4 flex items-center gap-4">
+                        <select id="assign-advisor-select" class="block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3"></select>
+                        <button id="assign-leads-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg whitespace-nowrap">Assign Selected</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Advisor Dashboard View -->
+    <div id="advisor-dashboard" class="view">
+         <header class="bg-white shadow-md sticky top-0 z-30">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Advisor Dashboard</h1>
+                <button id="advisor-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-sm">Logout</button>
+            </div>
+        </header>
+        <main class="container mx-auto px-6 py-8">
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-100 rounded-xl p-4">
+                    <h3 class="font-bold text-lg mb-4 text-center">To Do (নতুন লিড)</h3>
+                    <div id="new-column" class="kanban-column space-y-4"></div>
+                </div>
+                <div class="bg-slate-100 rounded-xl p-4">
+                    <h3 class="font-bold text-lg mb-4 text-center">Contacted (যোগাযোগ হয়েছে)</h3>
+                    <div id="contacted-column" class="kanban-column space-y-4"></div>
+                </div>
+                <div class="bg-slate-100 rounded-xl p-4">
+                    <h3 class="font-bold text-lg mb-4 text-center">Converted (সফল)</h3>
+                    <div id="converted-column" class="kanban-column space-y-4"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for showing messages -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h3 id="modal-title" class="text-xl font-bold mb-4">Notification</h3>
+            <p id="modal-message" class="text-slate-700"></p>
+            <button id="modal-close" class="mt-6 w-full bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">OK</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, query, where, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyA99KYGeReTFF9v9-0yVnuANrQlyzRlFUM",
+          authDomain: "advisor-task.firebaseapp.com",
+          projectId: "advisor-task",
+          storageBucket: "advisor-task.appspot.com",
+          messagingSenderId: "311020701856",
+          appId: "1:311020701856:web:0aeabfdb4381ffdc0861c5",
+          measurementId: "G-Y9VYXEVYM5"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const views = {
+            auth: document.getElementById('auth-view'),
+            leader: document.getElementById('leader-dashboard'),
+            advisor: document.getElementById('advisor-dashboard')
+        };
+        const leaderEmail = 'leader@gainersfuture.com';
+
+        // --- UI Elements ---
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const advisorList = document.getElementById('advisor-list');
+        const csvFileInput = document.getElementById('csv-file-input');
+        const unassignedLeadsList = document.getElementById('unassigned-leads-list');
+        const assignAdvisorSelect = document.getElementById('assign-advisor-select');
+        const geminiAdvisorSelect = document.getElementById('gemini-advisor-select');
+        const assignLeadsBtn = document.getElementById('assign-leads-btn');
+        const generateSummaryBtn = document.getElementById('generate-summary-btn');
+        const kanbanColumns = {
+            new: document.getElementById('new-column'),
+            contacted: document.getElementById('contacted-column'),
+            converted: document.getElementById('converted-column')
+        };
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalClose = document.getElementById('modal-close');
+
+        // --- Auth Logic ---
+        googleSignInBtn.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (!userDoc.exists()) {
+                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
+                    await setDoc(userDocRef, {
+                        name: user.displayName,
+                        email: user.email,
+                        role: role
+                    });
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        document.getElementById('leader-logout-btn').addEventListener('click', () => signOut(auth));
+        document.getElementById('advisor-logout-btn').addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.role === 'leader') {
+                        showView('leader');
+                        initLeaderDashboard();
+                    } else {
+                        showView('advisor');
+                        initAdvisorDashboard(user.uid);
+                    }
+                }
+            } else {
+                showView('auth');
+            }
+        });
+        
+        function showView(viewName) {
+            Object.values(views).forEach(v => v.style.display = 'none');
+            if (viewName === 'auth') {
+                views.auth.style.display = 'flex';
+            } else {
+                views[viewName].style.display = 'block';
+            }
+        }
+        
+        function showModal(title, message) {
+            modalTitle.textContent = title;
+            modalMessage.innerHTML = message;
+            modal.classList.remove('hidden');
+        }
+        modalClose.addEventListener('click', () => modal.classList.add('hidden'));
+
+        // --- Leader Dashboard Logic ---
+        function initLeaderDashboard() {
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, where("role", "==", "advisor"));
+            onSnapshot(q, (snapshot) => {
+                advisorList.innerHTML = '';
+                assignAdvisorSelect.innerHTML = '<option value="">Select Advisor</option>';
+                geminiAdvisorSelect.innerHTML = '<option value="">Select Advisor for Summary</option>';
+                snapshot.forEach(doc => {
+                    const advisor = { id: doc.id, ...doc.data() };
+                    const li = document.createElement('li');
+                    li.textContent = `${advisor.name} (${advisor.email})`;
+                    li.className = 'text-sm p-2 bg-slate-50 rounded';
+                    advisorList.appendChild(li);
+
+                    const option1 = document.createElement('option');
+                    option1.value = advisor.id;
+                    option1.textContent = advisor.name;
+                    assignAdvisorSelect.appendChild(option1);
+                    
+                    const option2 = document.createElement('option');
+                    option2.value = advisor.id;
+                    option2.textContent = advisor.name;
+                    geminiAdvisorSelect.appendChild(option2);
+                });
+            });
+            
+            const leadsRef = collection(db, "leads");
+            const unassignedQuery = query(leadsRef, where("status", "==", "unassigned"));
+            onSnapshot(unassignedQuery, (snapshot) => {
+                unassignedLeadsList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const lead = { id: doc.id, ...doc.data() };
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center gap-2 p-2 bg-slate-50 rounded';
+                    div.innerHTML = `<input type="checkbox" data-id="${lead.id}" class="lead-checkbox h-4 w-4"><label class="text-sm">${lead.clientName} - ${lead.clientNumber}</label>`;
+                    unassignedLeadsList.appendChild(div);
+                });
+            });
+        }
+        
+        csvFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const text = e.target.result;
+                const rows = text.split('\n').slice(1);
+                const batch = writeBatch(db);
+                rows.forEach(row => {
+                    const columns = row.split(',');
+                    if (columns.length >= 2) {
+                        const clientName = columns[0].trim();
+                        const clientNumber = columns[1].trim();
+                        if(clientName && clientNumber) {
+                            const newLeadRef = doc(collection(db, "leads"));
+                            batch.set(newLeadRef, { clientName, clientNumber, status: 'unassigned', assignedToId: '', assignedToName: '' });
+                        }
+                    }
+                });
+                await batch.commit();
+                showModal('Success', `${rows.length} leads imported successfully!`);
+            };
+            reader.readAsText(file);
+        });
+        
+        assignLeadsBtn.addEventListener('click', async () => {
+            const selectedAdvisorId = assignAdvisorSelect.value;
+            if (!selectedAdvisorId) {
+                showModal('Error', "Please select an advisor.");
+                return;
+            }
+            const selectedAdvisorName = assignAdvisorSelect.options[assignAdvisorSelect.selectedIndex].text;
+            const selectedLeads = document.querySelectorAll('.lead-checkbox:checked');
+            if (selectedLeads.length === 0) {
+                showModal('Error', "Please select at least one lead to assign.");
+                return;
+            }
+
+            const batch = writeBatch(db);
+            selectedLeads.forEach(checkbox => {
+                const leadId = checkbox.dataset.id;
+                const leadRef = doc(db, "leads", leadId);
+                batch.update(leadRef, { status: 'new', assignedToId: selectedAdvisorId, assignedToName: selectedAdvisorName });
+            });
+            await batch.commit();
+            showModal('Success', `${selectedLeads.length} leads assigned to ${selectedAdvisorName}.`);
+        });
+
+        // --- Advisor Dashboard Logic ---
+        function initAdvisorDashboard(userId) {
+            const leadsRef = collection(db, "leads");
+            const q = query(leadsRef, where("assignedToId", "==", userId));
+            onSnapshot(q, (snapshot) => {
+                Object.values(kanbanColumns).forEach(col => col.innerHTML = '');
+                snapshot.forEach(doc => {
+                    const lead = { id: doc.id, ...doc.data() };
+                    renderLeadCard(lead);
+                });
+            });
+        }
+
+        function renderLeadCard(lead) {
+            const card = document.createElement('div');
+            card.className = 'lead-card bg-white p-4 rounded-lg shadow-md';
+            card.innerHTML = `
+                <h4 class="font-bold">${lead.clientName}</h4>
+                <p class="text-sm text-slate-600">${lead.clientNumber}</p>
+                <div class="mt-4 flex gap-2">
+                    <a href="tel:${lead.clientNumber}" data-id="${lead.id}" class="call-btn flex-1 text-center bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold py-1 px-2 rounded">Call</a>
+                    <a href="https://wa.me/${lead.clientNumber.replace(/[^0-9]/g, '')}" target="_blank" data-id="${lead.id}" class="whatsapp-btn flex-1 text-center bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-1 px-2 rounded">WhatsApp</a>
+                </div>
+                <select data-id="${lead.id}" class="status-select mt-2 w-full text-xs border-slate-200 rounded">
+                    <option value="new" ${lead.status === 'new' ? 'selected' : ''}>New</option>
+                    <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                    <option value="converted" ${lead.status === 'converted' ? 'selected' : ''}>Converted</option>
+                </select>
+            `;
+            const column = kanbanColumns[lead.status] || kanbanColumns.new;
+            column.appendChild(card);
+        }
+
+        views.advisor.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('call-btn') || e.target.classList.contains('whatsapp-btn')) {
+                const leadId = e.target.dataset.id;
+                const leadRef = doc(db, "leads", leadId);
+                await setDoc(leadRef, { status: 'contacted' }, { merge: true });
+            }
+        });
+        
+        views.advisor.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('status-select')) {
+                const leadId = e.target.dataset.id;
+                const newStatus = e.target.value;
+                const leadRef = doc(db, "leads", leadId);
+                await setDoc(leadRef, { status: newStatus }, { merge: true });
+            }
+        });
+        
+        // --- Gemini API Logic ---
+        async function callGeminiAPI(prompt) {
+            const apiKey = ""; // Leave empty
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+            const result = await response.json();
+            return result.candidates[0].content.parts[0].text;
+        }
+
+        generateSummaryBtn.addEventListener('click', async () => {
+            const advisorId = geminiAdvisorSelect.value;
+            const advisorName = geminiAdvisorSelect.options[geminiAdvisorSelect.selectedIndex].text;
+            if (!advisorId) {
+                showModal('Error', 'Please select an advisor.');
+                return;
+            }
+
+            document.getElementById('gemini-btn-text').classList.add('hidden');
+            document.getElementById('gemini-loader').classList.remove('hidden');
+            generateSummaryBtn.disabled = true;
+
+            try {
+                const leadsRef = collection(db, "leads");
+                const q = query(leadsRef, where("assignedToId", "==", advisorId));
+                const querySnapshot = await getDocs(q);
+                
+                let totalLeads = 0;
+                let contacted = 0;
+                let converted = 0;
+                querySnapshot.forEach(doc => {
+                    totalLeads++;
+                    const data = doc.data();
+                    if (data.status === 'contacted') contacted++;
+                    if (data.status === 'converted') converted++;
+                });
+
+                const prompt = `Generate a brief weekly performance summary in Bengali for a tele-sales advisor named '${advisorName}'. Data: Total assigned leads: ${totalLeads}, Leads contacted: ${contacted}, Leads successfully converted: ${converted}. The summary should be professional, concise, and suitable for a management report.`;
+                
+                const summary = await callGeminiAPI(prompt);
+                showModal(`Performance Summary for ${advisorName}`, summary.replace(/\n/g, '<br>'));
+
+            } catch (error) {
+                showModal('Error', `Failed to generate summary: ${error.message}`);
+            } finally {
+                document.getElementById('gemini-btn-text').classList.remove('hidden');
+                document.getElementById('gemini-loader').classList.add('hidden');
+                generateSummaryBtn.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>
 
