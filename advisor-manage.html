@@ -182,8 +182,11 @@
             const savedState = JSON.parse(localStorage.getItem('advisorAppState'));
             if (savedState) {
                 state = savedState;
+                if (!state.users.find(u => u.role === 'leader')) {
+                    state.users.push({ name: 'Leader', role: 'leader', password: 'leader@gainers' });
+                    saveState();
+                }
             } else {
-                // Initialize with a default leader
                 state.users.push({ name: 'Leader', role: 'leader', password: 'leader@gainers' });
                 saveState();
             }
@@ -228,13 +231,15 @@
         function showLogin(role) {
             state.currentLoginRole = role;
             loginTitle.textContent = `${role.charAt(0).toUpperCase() + role.slice(1)} Login`;
-            loginNameField.style.display = role === 'advisor' ? 'block' : 'none';
+            document.getElementById('login-password').value = '';
+            
             if (role === 'leader') {
-                document.getElementById('login-name').value = 'Leader'; // Pre-fill for leader
+                loginNameField.style.display = 'none';
+                document.getElementById('login-name').value = 'Leader';
             } else {
+                loginNameField.style.display = 'block';
                 document.getElementById('login-name').value = '';
             }
-            loginForm.reset();
             showView('login');
         }
 
@@ -243,7 +248,12 @@
             const name = document.getElementById('login-name').value;
             const password = document.getElementById('login-password').value;
             
-            const user = state.users.find(u => u.role === state.currentLoginRole && (u.role === 'leader' || u.name === name) && u.password === password);
+            let user;
+            if (state.currentLoginRole === 'leader') {
+                user = state.users.find(u => u.role === 'leader' && u.password === password);
+            } else {
+                user = state.users.find(u => u.role === 'advisor' && u.name === name && u.password === password);
+            }
 
             if (user) {
                 state.loggedInUser = user;
@@ -369,7 +379,7 @@
             if (e.target.matches('.call-btn, .whatsapp-btn')) {
                 const taskId = parseInt(e.target.dataset.id);
                 const task = state.tasks.find(t => t.id === taskId);
-                if (task) {
+                if (task && task.status === 'new') { // Only update if status is 'new'
                     task.status = 'contacted';
                     saveState();
                     renderAdvisorDashboard();
