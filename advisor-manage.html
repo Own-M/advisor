@@ -13,45 +13,48 @@
         h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
         .view { display: none; }
         .kanban-column { min-height: 60vh; }
+        .card { transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .lead-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
         .lead-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <!-- Login/Register View -->
-    <div id="auth-view" class="view min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-            <h2 id="auth-title" class="text-3xl font-bold text-center mb-6">Login</h2>
-            
-            <!-- Google Sign-in Button -->
-            <button id="google-signin-btn" class="w-full bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-lg flex items-center justify-center gap-3 transition-all duration-300 mb-4">
-                <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.012,36.49,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
-                Sign in with Google
-            </button>
-            <div class="my-4 flex items-center before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-                <p class="text-center font-semibold mx-4">OR</p>
-            </div>
-
-            <!-- Email/Password Form -->
-            <form id="authForm">
-                <div id="name-field" class="mb-4 hidden">
-                    <label for="name" class="block text-sm font-medium text-slate-700">আপনার নাম</label>
-                    <input type="text" id="name" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+    <!-- Landing View -->
+    <div id="landing-view" class="view min-h-screen flex items-center justify-center p-4">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold text-slate-800 mb-4">Welcome to the Advisor Portal</h1>
+            <p class="text-slate-600 mb-12">Please select your role to continue</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div id="leader-card" class="card bg-white p-10 rounded-2xl shadow-lg cursor-pointer">
+                    <h2 class="text-2xl font-bold mb-2">Team Leader Dashboard</h2>
+                    <p class="text-slate-500">Manage advisors and allocate leads.</p>
                 </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-slate-700">ইমেইল</label>
-                    <input type="email" id="email" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+                <div id="advisor-card" class="card bg-white p-10 rounded-2xl shadow-lg cursor-pointer">
+                    <h2 class="text-2xl font-bold mb-2">Advisor Dashboard</h2>
+                    <p class="text-slate-500">View and manage your assigned leads.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login View -->
+    <div id="login-view" class="view min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+            <h2 id="login-title" class="text-3xl font-bold text-center mb-6">Login</h2>
+            <form id="loginForm">
+                <div id="login-name-field" class="mb-4">
+                    <label for="login-name" class="block text-sm font-medium text-slate-700">নাম</label>
+                    <input type="text" id="login-name" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-slate-700">পাসওয়ার্ড</label>
-                    <input type="password" id="password" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+                    <label for="login-password" class="block text-sm font-medium text-slate-700">পাসওয়ার্ড</label>
+                    <input type="password" id="login-password" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
                 </div>
-                <button type="submit" id="auth-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">Login</button>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">Login</button>
             </form>
-            <p class="text-center text-sm mt-4">
-                <a href="#" id="toggle-auth-mode" class="text-indigo-600 hover:underline">অ্যাডভাইজর হিসেবে রেজিস্টার করুন</a>
-            </p>
+            <button id="back-to-landing-btn" class="w-full mt-4 text-center text-sm text-indigo-600 hover:underline">Back to Role Selection</button>
         </div>
     </div>
 
@@ -64,25 +67,43 @@
             </div>
         </header>
         <main class="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-bold mb-4">Registered Advisors</h2>
-                <ul id="advisor-list" class="space-y-2 max-h-96 overflow-y-auto"></ul>
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Add New Advisor</h2>
+                    <form id="add-advisor-form">
+                        <div class="mb-4">
+                            <label for="advisor-name" class="block text-sm font-medium">Advisor Name</label>
+                            <input type="text" id="advisor-name" required class="mt-1 block w-full border border-slate-300 rounded-md py-2 px-3">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg">Add Advisor</button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Registered Advisors</h2>
+                    <ul id="advisor-list" class="space-y-2 max-h-60 overflow-y-auto"></ul>
+                </div>
             </div>
             <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-bold mb-4">Manage Leads</h2>
-                <div class="mb-6 border-b pb-6">
-                    <h3 class="font-semibold mb-2">Bulk Import Leads (CSV)</h3>
-                    <input type="file" id="csv-file-input" accept=".csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"/>
-                    <p class="text-xs text-slate-500 mt-1">CSV format: clientName,clientNumber</p>
-                </div>
-                <div>
-                    <h3 class="font-semibold mb-2">Unassigned Leads</h3>
-                    <div id="unassigned-leads-list" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
-                    <div class="mt-4 flex items-center gap-4">
-                        <select id="assign-advisor-select" class="block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3"></select>
-                        <button id="assign-leads-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg whitespace-nowrap">Assign Selected</button>
+                <h2 class="text-xl font-bold mb-4">Allocate Leads</h2>
+                <form id="allocate-task-form" class="mb-6 border-b pb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="lead-name" class="block text-sm font-medium">Client Name</label>
+                            <input type="text" id="lead-name" required class="mt-1 block w-full border rounded-md py-2 px-3">
+                        </div>
+                        <div>
+                            <label for="lead-number" class="block text-sm font-medium">Client Number</label>
+                            <input type="text" id="lead-number" required class="mt-1 block w-full border rounded-md py-2 px-3">
+                        </div>
+                        <div>
+                            <label for="assign-advisor-select" class="block text-sm font-medium">Assign To</label>
+                            <select id="assign-advisor-select" required class="mt-1 block w-full border rounded-md py-2 px-3"></select>
+                        </div>
                     </div>
-                </div>
+                    <button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg">Allocate Lead</button>
+                </form>
+                <h3 class="font-semibold mb-2">All Assigned Leads</h3>
+                <div id="all-tasks-list" class="space-y-2 max-h-96 overflow-y-auto pr-2"></div>
             </div>
         </main>
     </div>
@@ -91,12 +112,28 @@
     <div id="advisor-dashboard" class="view">
          <header class="bg-white shadow-md sticky top-0 z-30">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <h1 class="text-2xl font-bold">Advisor Dashboard</h1>
-                <button id="advisor-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-sm">Logout</button>
+                <div>
+                    <h1 class="text-2xl font-bold">Advisor Dashboard</h1>
+                    <p id="advisor-welcome-msg" class="text-sm text-slate-600"></p>
+                </div>
+                <div>
+                    <button id="settings-btn" class="bg-gray-200 hover:bg-gray-300 text-slate-800 font-bold py-2 px-4 rounded-lg text-sm mr-2">Settings</button>
+                    <button id="advisor-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-sm">Logout</button>
+                </div>
             </div>
         </header>
         <main class="container mx-auto px-6 py-8">
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <section id="settings-view" class="hidden mb-8 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Change Password</h2>
+                <form id="change-password-form">
+                    <div class="mb-4">
+                        <label for="new-password" class="block text-sm font-medium">New Password</label>
+                        <input type="password" id="new-password" required class="mt-1 block w-full border rounded-md py-2 px-3">
+                    </div>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Update Password</button>
+                </form>
+            </section>
+            <section id="tasks-view" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-slate-100 rounded-xl p-4">
                     <h3 class="font-bold text-lg mb-4 text-center">To Do (নতুন লিড)</h3>
                     <div id="new-column" class="kanban-column space-y-4"></div>
@@ -112,267 +149,264 @@
             </section>
         </main>
     </div>
+    
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
+            <p id="modal-message" class="text-lg"></p>
+            <button id="modal-close" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">OK</button>
+        </div>
+    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, query, where, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyA99KYGeReTFF9v9-0yVnuANrQlyzRlFUM",
-          authDomain: "advisor-task.firebaseapp.com",
-          projectId: "advisor-task",
-          storageBucket: "advisor-task.appspot.com",
-          messagingSenderId: "311020701856",
-          appId: "1:311020701856:web:0aeabfdb4381ffdc0861c5",
-          measurementId: "G-Y9VYXEVYM5"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
+    <script>
+        // --- UI Elements ---
         const views = {
-            auth: document.getElementById('auth-view'),
+            landing: document.getElementById('landing-view'),
+            login: document.getElementById('login-view'),
             leader: document.getElementById('leader-dashboard'),
             advisor: document.getElementById('advisor-dashboard')
         };
-        const leaderEmail = 'gainersfuture@gmail.com';
+        const loginForm = document.getElementById('loginForm');
+        const loginTitle = document.getElementById('login-title');
+        const loginNameField = document.getElementById('login-name-field');
 
-        // --- Auth Elements ---
-        const authForm = document.getElementById('authForm');
-        const authTitle = document.getElementById('auth-title');
-        const nameField = document.getElementById('name-field');
-        const authBtn = document.getElementById('auth-btn');
-        const toggleAuthMode = document.getElementById('toggle-auth-mode');
-        const googleSignInBtn = document.getElementById('google-signin-btn');
-        let isLoginMode = true;
-        
-        // --- Leader Elements ---
-        const advisorList = document.getElementById('advisor-list');
-        const csvFileInput = document.getElementById('csv-file-input');
-        const unassignedLeadsList = document.getElementById('unassigned-leads-list');
-        const assignAdvisorSelect = document.getElementById('assign-advisor-select');
-        const assignLeadsBtn = document.getElementById('assign-leads-btn');
-
-        // --- Advisor Elements ---
-        const kanbanColumns = {
-            new: document.getElementById('new-column'),
-            contacted: document.getElementById('contacted-column'),
-            converted: document.getElementById('converted-column')
+        // --- Data Management (localStorage) ---
+        let state = {
+            users: [],
+            tasks: [],
+            loggedInUser: null,
+            currentLoginRole: null
         };
 
-        // --- Auth Logic ---
-        toggleAuthMode.addEventListener('click', (e) => {
-            e.preventDefault();
-            isLoginMode = !isLoginMode;
-            authTitle.textContent = isLoginMode ? 'Login' : 'Register as Advisor';
-            authBtn.textContent = isLoginMode ? 'Login' : 'Register';
-            toggleAuthMode.textContent = isLoginMode ? 'অ্যাডভাইজর হিসেবে রেজিস্টার করুন' : 'Already have an account? Login';
-            nameField.classList.toggle('hidden', isLoginMode);
-        });
-
-        googleSignInBtn.addEventListener('click', () => signInWithPopup(auth, provider).catch(error => alert(error.message)));
-
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
-
-            try {
-                if (isLoginMode) {
-                    await signInWithEmailAndPassword(auth, email, password);
-                } else {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
-                    await setDoc(doc(db, "users", user.uid), {
-                        name: name,
-                        email: email,
-                        role: role
-                    });
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        });
-
-        document.getElementById('leader-logout-btn').addEventListener('click', () => signOut(auth));
-        document.getElementById('advisor-logout-btn').addEventListener('click', () => signOut(auth));
-
-        async function handleUserSession(user) {
-            if (user) {
-                const userDocRef = doc(db, "users", user.uid);
-                let userDoc = await getDoc(userDocRef);
-
-                if (!userDoc.exists()) {
-                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
-                    await setDoc(userDocRef, {
-                        name: user.displayName || document.getElementById('name').value || 'New User',
-                        email: user.email,
-                        role: role
-                    });
-                    userDoc = await getDoc(userDocRef); // Re-fetch after creation
-                }
-                
-                const userData = userDoc.data();
-                if (userData.role === 'leader') {
-                    showView('leader');
-                    initLeaderDashboard();
-                } else {
-                    showView('advisor');
-                    initAdvisorDashboard(user.uid);
-                }
+        function loadState() {
+            const savedState = JSON.parse(localStorage.getItem('advisorAppState'));
+            if (savedState) {
+                state = savedState;
             } else {
-                showView('auth');
+                // Initialize with a default leader
+                state.users.push({ name: 'Leader', role: 'leader', password: 'leader@gainers' });
+                saveState();
             }
         }
 
-        onAuthStateChanged(auth, handleUserSession);
-        
+        function saveState() {
+            localStorage.setItem('advisorAppState', JSON.stringify(state));
+        }
+
+        // --- View Management ---
         function showView(viewName) {
             Object.values(views).forEach(v => v.style.display = 'none');
-            if (viewName === 'auth') {
-                views.auth.style.display = 'flex';
-            } else {
+            views[viewName].style.display = 'flex'; // Use flex for centering
+            if (viewName === 'leader' || viewName === 'advisor') {
                 views[viewName].style.display = 'block';
             }
         }
 
-        // --- Leader Dashboard Logic ---
-        function initLeaderDashboard() {
-            const usersRef = collection(db, "users");
-            const q = query(usersRef, where("role", "==", "advisor"));
-            onSnapshot(q, (snapshot) => {
-                advisorList.innerHTML = '';
-                assignAdvisorSelect.innerHTML = '<option value="">Select Advisor</option>';
-                snapshot.forEach(doc => {
-                    const advisor = { id: doc.id, ...doc.data() };
-                    const li = document.createElement('li');
-                    li.textContent = `${advisor.name} (${advisor.email})`;
-                    li.className = 'text-sm p-2 bg-slate-50 rounded';
-                    advisorList.appendChild(li);
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            showView('landing');
 
-                    const option = document.createElement('option');
-                    option.value = advisor.id;
-                    option.textContent = advisor.name;
-                    assignAdvisorSelect.appendChild(option);
-                });
-            });
+            // --- Landing Page Logic ---
+            document.getElementById('leader-card').addEventListener('click', () => showLogin('leader'));
+            document.getElementById('advisor-card').addEventListener('click', () => showLogin('advisor'));
+            document.getElementById('back-to-landing-btn').addEventListener('click', () => showView('landing'));
+
+            // --- Login Logic ---
+            loginForm.addEventListener('submit', handleLogin);
+
+            // --- Logout Logic ---
+            document.getElementById('leader-logout-btn').addEventListener('click', logout);
+            document.getElementById('advisor-logout-btn').addEventListener('click', logout);
             
-            const leadsRef = collection(db, "leads");
-            const unassignedQuery = query(leadsRef, where("status", "==", "unassigned"));
-            onSnapshot(unassignedQuery, (snapshot) => {
-                unassignedLeadsList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const lead = { id: doc.id, ...doc.data() };
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center gap-2 p-2 bg-slate-50 rounded';
-                    div.innerHTML = `<input type="checkbox" data-id="${lead.id}" class="lead-checkbox h-4 w-4"><label class="text-sm">${lead.clientName} - ${lead.clientNumber}</label>`;
-                    unassignedLeadsList.appendChild(div);
-                });
+            // --- Settings Toggle ---
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                document.getElementById('settings-view').classList.toggle('hidden');
             });
+        });
+
+        function showLogin(role) {
+            state.currentLoginRole = role;
+            loginTitle.textContent = `${role.charAt(0).toUpperCase() + role.slice(1)} Login`;
+            loginNameField.style.display = role === 'advisor' ? 'block' : 'none';
+            if (role === 'leader') {
+                document.getElementById('login-name').value = 'Leader'; // Pre-fill for leader
+            } else {
+                document.getElementById('login-name').value = '';
+            }
+            loginForm.reset();
+            showView('login');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('login-name').value;
+            const password = document.getElementById('login-password').value;
+            
+            const user = state.users.find(u => u.role === state.currentLoginRole && (u.role === 'leader' || u.name === name) && u.password === password);
+
+            if (user) {
+                state.loggedInUser = user;
+                saveState();
+                if (user.role === 'leader') {
+                    renderLeaderDashboard();
+                    showView('leader');
+                } else {
+                    renderAdvisorDashboard();
+                    showView('advisor');
+                }
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function logout() {
+            state.loggedInUser = null;
+            saveState();
+            showView('landing');
         }
         
-        csvFileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const text = e.target.result;
-                const rows = text.split('\n').slice(1);
-                const batch = writeBatch(db);
-                rows.forEach(row => {
-                    const columns = row.split(',');
-                    if (columns.length >= 2) {
-                        const clientName = columns[0].trim();
-                        const clientNumber = columns[1].trim();
-                        if(clientName && clientNumber) {
-                            const newLeadRef = doc(collection(db, "leads"));
-                            batch.set(newLeadRef, { clientName, clientNumber, status: 'unassigned', assignedToId: '', assignedToName: '' });
-                        }
-                    }
-                });
-                await batch.commit();
-                alert(`${rows.length} leads imported successfully!`);
-            };
-            reader.readAsText(file);
-        });
-        
-        assignLeadsBtn.addEventListener('click', async () => {
-            const selectedAdvisorId = assignAdvisorSelect.value;
-            if (!selectedAdvisorId) {
-                alert("Please select an advisor.");
-                return;
-            }
-            const selectedAdvisorName = assignAdvisorSelect.options[assignAdvisorSelect.selectedIndex].text;
-            const selectedLeads = document.querySelectorAll('.lead-checkbox:checked');
-            if (selectedLeads.length === 0) {
-                alert("Please select at least one lead to assign.");
-                return;
-            }
+        // --- Leader Dashboard Logic ---
+        function renderLeaderDashboard() {
+            const advisorList = document.getElementById('advisor-list');
+            const assignAdvisorSelect = document.getElementById('assign-advisor-select');
+            const allTasksList = document.getElementById('all-tasks-list');
+            
+            advisorList.innerHTML = '';
+            assignAdvisorSelect.innerHTML = '<option value="">Select Advisor</option>';
+            
+            state.users.filter(u => u.role === 'advisor').forEach(adv => {
+                const li = document.createElement('li');
+                li.className = 'text-sm p-2 bg-slate-50 rounded';
+                li.textContent = adv.name;
+                advisorList.appendChild(li);
 
-            const batch = writeBatch(db);
-            selectedLeads.forEach(checkbox => {
-                const leadId = checkbox.dataset.id;
-                const leadRef = doc(db, "leads", leadId);
-                batch.update(leadRef, { status: 'new', assignedToId: selectedAdvisorId, assignedToName: selectedAdvisorName });
+                const option = document.createElement('option');
+                option.value = adv.name;
+                option.textContent = adv.name;
+                assignAdvisorSelect.appendChild(option);
             });
-            await batch.commit();
-            alert(`${selectedLeads.length} leads assigned to ${selectedAdvisorName}.`);
+
+            allTasksList.innerHTML = '';
+            state.tasks.forEach(task => {
+                 const div = document.createElement('div');
+                 div.className = 'text-sm p-2 bg-slate-100 rounded flex justify-between';
+                 div.innerHTML = `<span><strong>${task.clientName}</strong> (${task.clientNumber})</span> <span class="font-semibold">${task.assignedTo}</span>`;
+                 allTasksList.appendChild(div);
+            });
+        }
+
+        document.getElementById('add-advisor-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const nameInput = document.getElementById('advisor-name');
+            const newName = nameInput.value.trim();
+            if (newName && !state.users.find(u => u.name === newName)) {
+                state.users.push({ name: newName, role: 'advisor', password: 'Ok@gainers' });
+                saveState();
+                renderLeaderDashboard();
+                nameInput.value = '';
+            } else {
+                alert('Advisor name must be unique and not empty.');
+            }
+        });
+
+        document.getElementById('allocate-task-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const clientName = document.getElementById('lead-name').value;
+            const clientNumber = document.getElementById('lead-number').value;
+            const assignedTo = document.getElementById('assign-advisor-select').value;
+
+            if (clientName && clientNumber && assignedTo) {
+                state.tasks.push({
+                    id: Date.now(),
+                    clientName,
+                    clientNumber,
+                    assignedTo,
+                    status: 'new'
+                });
+                saveState();
+                renderLeaderDashboard();
+                e.target.reset();
+            } else {
+                alert('Please fill all fields to allocate a lead.');
+            }
         });
 
         // --- Advisor Dashboard Logic ---
-        function initAdvisorDashboard(userId) {
-            const leadsRef = collection(db, "leads");
-            const q = query(leadsRef, where("assignedToId", "==", userId));
-            onSnapshot(q, (snapshot) => {
-                Object.values(kanbanColumns).forEach(col => col.innerHTML = '');
-                snapshot.forEach(doc => {
-                    const lead = { id: doc.id, ...doc.data() };
-                    renderLeadCard(lead);
-                });
+        function renderAdvisorDashboard() {
+            const welcomeMsg = document.getElementById('advisor-welcome-msg');
+            welcomeMsg.textContent = `Welcome, ${state.loggedInUser.name}!`;
+            
+            const kanbanColumns = {
+                new: document.getElementById('new-column'),
+                contacted: document.getElementById('contacted-column'),
+                converted: document.getElementById('converted-column')
+            };
+            Object.values(kanbanColumns).forEach(col => col.innerHTML = '');
+
+            state.tasks.filter(t => t.assignedTo === state.loggedInUser.name).forEach(task => {
+                const card = document.createElement('div');
+                card.className = 'lead-card bg-white p-4 rounded-lg shadow-md';
+                card.innerHTML = `
+                    <h4 class="font-bold">${task.clientName}</h4>
+                    <p class="text-sm text-slate-600">${task.clientNumber}</p>
+                    <div class="mt-4 flex gap-2">
+                        <a href="tel:${task.clientNumber}" data-id="${task.id}" class="call-btn flex-1 text-center bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold py-1 px-2 rounded">Call</a>
+                        <a href="https://wa.me/${task.clientNumber.replace(/[^0-9]/g, '')}" target="_blank" data-id="${task.id}" class="whatsapp-btn flex-1 text-center bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-1 px-2 rounded">WhatsApp</a>
+                    </div>
+                    <select data-id="${task.id}" class="status-select mt-2 w-full text-xs border-slate-200 rounded">
+                        <option value="new" ${task.status === 'new' ? 'selected' : ''}>New</option>
+                        <option value="contacted" ${task.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                        <option value="converted" ${task.status === 'converted' ? 'selected' : ''}>Converted</option>
+                    </select>
+                `;
+                const column = kanbanColumns[task.status] || kanbanColumns.new;
+                column.appendChild(card);
             });
         }
-
-        function renderLeadCard(lead) {
-            const card = document.createElement('div');
-            card.className = 'lead-card bg-white p-4 rounded-lg shadow-md';
-            card.innerHTML = `
-                <h4 class="font-bold">${lead.clientName}</h4>
-                <p class="text-sm text-slate-600">${lead.clientNumber}</p>
-                <div class="mt-4 flex gap-2">
-                    <a href="tel:${lead.clientNumber}" data-id="${lead.id}" class="call-btn flex-1 text-center bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold py-1 px-2 rounded">Call</a>
-                    <a href="https://wa.me/${lead.clientNumber.replace(/[^0-9]/g, '')}" target="_blank" data-id="${lead.id}" class="whatsapp-btn flex-1 text-center bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-1 px-2 rounded">WhatsApp</a>
-                </div>
-                <select data-id="${lead.id}" class="status-select mt-2 w-full text-xs border-slate-200 rounded">
-                    <option value="new" ${lead.status === 'new' ? 'selected' : ''}>New</option>
-                    <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>Contacted</option>
-                    <option value="converted" ${lead.status === 'converted' ? 'selected' : ''}>Converted</option>
-                </select>
-            `;
-            const column = kanbanColumns[lead.status] || kanbanColumns.new;
-            column.appendChild(card);
-        }
-
-        views.advisor.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('call-btn') || e.target.classList.contains('whatsapp-btn')) {
-                const leadId = e.target.dataset.id;
-                const leadRef = doc(db, "leads", leadId);
-                await setDoc(leadRef, { status: 'contacted' }, { merge: true });
-            }
-        });
         
-        views.advisor.addEventListener('change', async (e) => {
-            if (e.target.classList.contains('status-select')) {
-                const leadId = e.target.dataset.id;
-                const newStatus = e.target.value;
-                const leadRef = doc(db, "leads", leadId);
-                await setDoc(leadRef, { status: newStatus }, { merge: true });
+        document.getElementById('advisor-dashboard').addEventListener('click', e => {
+            if (e.target.matches('.call-btn, .whatsapp-btn')) {
+                const taskId = parseInt(e.target.dataset.id);
+                const task = state.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.status = 'contacted';
+                    saveState();
+                    renderAdvisorDashboard();
+                }
             }
         });
+
+        document.getElementById('advisor-dashboard').addEventListener('change', e => {
+            if (e.target.matches('.status-select')) {
+                const taskId = parseInt(e.target.dataset.id);
+                const newStatus = e.target.value;
+                const task = state.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.status = newStatus;
+                    saveState();
+                    renderAdvisorDashboard();
+                }
+            }
+        });
+
+        document.getElementById('change-password-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+            const user = state.users.find(u => u.name === state.loggedInUser.name);
+            if (user) {
+                user.password = newPassword;
+                saveState();
+                alert('Password updated successfully!');
+                e.target.reset();
+                document.getElementById('settings-view').classList.add('hidden');
+            }
+        });
+
     </script>
 </body>
 </html>
