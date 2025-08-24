@@ -1,1 +1,345 @@
 
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gainers Future - Advisor Application Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tiro+Bangla&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .bangla {
+            font-family: 'Tiro Bangla', serif;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+        .form-input, .form-select, .form-textarea, .form-radio-label {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .submit-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-blue-700 bangla">অ্যাডভাইজর আবেদন ফর্ম</h1>
+            <p class="text-slate-600 mt-2 bangla">আপনার তথ্য দিয়ে নিচের ফর্মটি পূরণ করুন।</p>
+        </header>
+
+        <main id="form-container" class="form-container p-8 md:p-12">
+            <form id="advisorForm">
+                <!-- Section 1: Basic Information -->
+                <fieldset class="mb-8">
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 1: Basic Information</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="fullName" class="block text-sm font-medium text-slate-700 bangla mb-1">Full Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="fullName" name="fullName" required class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="contactNumber" class="block text-sm font-medium text-slate-700 bangla mb-1">Contact Number <span class="text-red-500">*</span></label>
+                            <input type="tel" id="contactNumber" name="contactNumber" required class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="whatsappNumber" class="block text-sm font-medium text-slate-700 bangla mb-1">WhatsApp Number</label>
+                            <input type="tel" id="whatsappNumber" name="whatsappNumber" class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="emailAddress" class="block text-sm font-medium text-slate-700 bangla mb-1">Email Address <span class="text-red-500">*</span></label>
+                            <input type="email" id="emailAddress" name="emailAddress" required class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="presentAddress" class="block text-sm font-medium text-slate-700 bangla mb-1">Present Address <span class="text-red-500">*</span></label>
+                            <textarea id="presentAddress" name="presentAddress" rows="3" required class="form-textarea w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label for="dateOfBirth" class="block text-sm font-medium text-slate-700 bangla mb-1">Date of Birth <span class="text-red-500">*</span></label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 2: Education & Work Background -->
+                <fieldset class="mb-8">
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 2: Education & Work Background</legend>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label for="educationQualification" class="block text-sm font-medium text-slate-700 bangla mb-1">Educational Qualification <span class="text-red-500">*</span></label>
+                            <input type="text" id="educationQualification" name="educationQualification" required class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                        <div>
+                            <p class="block text-sm font-medium text-slate-700 bangla mb-2">Previous Tele-Sales Experience? <span class="text-red-500">*</span></p>
+                            <div class="flex items-center gap-6">
+                                <label class="form-radio-label flex items-center"><input type="radio" name="teleSalesExperience" value="Yes" required class="mr-2"> <span class="bangla">Yes</span></label>
+                                <label class="form-radio-label flex items-center"><input type="radio" name="teleSalesExperience" value="No" required class="mr-2"> <span class="bangla">No</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 3: Payment Information -->
+                <fieldset class="mb-8">
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 3: Payment Information</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="paymentMethod" class="block text-sm font-medium text-slate-700 bangla mb-1">Preferred Payment Method <span class="text-red-500">*</span></label>
+                            <select id="paymentMethod" name="paymentMethod" required class="form-select w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                                <option value="" disabled selected>Select a method</option>
+                                <option value="Bank">Bank</option>
+                                <option value="bKash">bKash</option>
+                                <option value="Nagad">Nagad</option>
+                            </select>
+                        </div>
+                        <div id="paymentNumberContainer" class="hidden">
+                            <label for="paymentNumber" class="block text-sm font-medium text-slate-700 bangla mb-1">bKash / Nagad Number <span class="text-red-500">*</span></label>
+                            <input type="tel" id="paymentNumber" name="paymentNumber" class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 4: Work Setup -->
+                <fieldset class="mb-8">
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 4: Work Setup (Remote)</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="block text-sm font-medium text-slate-700 bangla mb-2">Do you have a Laptop/PC? <span class="text-red-500">*</span></p>
+                            <div class="flex items-center gap-6">
+                                <label class="form-radio-label flex items-center"><input type="radio" name="hasLaptop" value="Yes" required class="mr-2"> <span class="bangla">Yes</span></label>
+                                <label class="form-radio-label flex items-center"><input type="radio" name="hasLaptop" value="No" required class="mr-2"> <span class="bangla">No</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="block text-sm font-medium text-slate-700 bangla mb-2">Do you have a stable Internet Connection? <span class="text-red-500">*</span></p>
+                            <div class="flex items-center gap-6">
+                                <label class="form-radio-label flex items-center"><input type="radio" name="hasInternet" value="Yes" required class="mr-2"> <span class="bangla">Yes</span></label>
+                                <label class="form-radio-label flex items-center"><input type="radio" name="hasInternet" value="No" required class="mr-2"> <span class="bangla">No</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 5: Work Availability -->
+                <fieldset class="mb-8">
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 5: Work Availability</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="workingHours" class="block text-sm font-medium text-slate-700 bangla mb-1">Preferred Working Hours <span class="text-red-500">*</span></label>
+                            <select id="workingHours" name="workingHours" required class="form-select w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                                <option value="" disabled selected>Select hours</option>
+                                <option value="Morning">Morning</option>
+                                <option value="Evening">Evening</option>
+                                <option value="Night">Night</option>
+                                <option value="Flexible">Flexible</option>
+                            </select>
+                        </div>
+                        <div id="timeSlotContainer" class="hidden md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 bangla mb-2">Time Slot (Select all that apply) <span class="text-red-500">*</span></label>
+                            <div id="timeSlotCheckboxes" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <!-- Checkboxes will be populated by JS -->
+                            </div>
+                            <p id="timeSlotError" class="text-red-500 text-xs mt-2 bangla hidden">Please select at least one time slot.</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="dailyHours" class="block text-sm font-medium text-slate-700 bangla mb-1">Daily কত ঘণ্টা কাজ করতে পারবেন?</label>
+                            <input type="text" id="dailyHours" name="dailyHours" placeholder="e.g., “4 hours”, “6 hours”" class="form-input w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 6: Final Agreement -->
+                <fieldset>
+                    <legend class="text-xl font-bold text-slate-800 bangla border-b-2 border-slate-200 pb-2 mb-6 w-full">Section 6: Final Agreement</legend>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="declaration" name="declaration" value="Agreed" required class="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                        <label for="declaration" class="ml-3 block text-sm text-slate-700 bangla">I confirm that all information provided is correct. <span class="text-red-500">*</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="mt-10 text-center">
+                    <button type="submit" id="submit-btn" class="submit-btn w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-10 rounded-lg bangla flex items-center justify-center mx-auto">
+                        <span id="btn-text">সাবমিট করুন</span>
+                        <div id="loader" class="loader hidden"></div>
+                    </button>
+                </div>
+            </form>
+            <div id="success-message" class="hidden text-center p-8 bg-green-50 text-green-700 rounded-lg">
+                <h3 class="text-2xl font-bold bangla">ধন্যবাদ!</h3>
+                <p class="mt-2 bangla">আপনার আবেদন সফলভাবে জমা হয়েছে।</p>
+                <button onclick="resetForm()" class="mt-6 bg-green-600 text-white font-bold py-2 px-6 rounded-lg bangla">ফর্মটি রিসেট করুন</button>
+            </div>
+            <div id="error-message" class="hidden text-center p-8 bg-red-50 text-red-700 rounded-lg">
+                <h3 class="text-2xl font-bold bangla">দুঃখিত!</h3>
+                <p class="mt-2 bangla">তথ্য জমা দেওয়ার সময় একটি সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</p>
+                 <button onclick="resetForm()" class="mt-6 bg-red-600 text-white font-bold py-2 px-6 rounded-lg bangla">আবার চেষ্টা করুন</button>
+            </div>
+        </main>
+    </div>
+
+<script>
+    const form = document.getElementById('advisorForm');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const loader = document.getElementById('loader');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    
+    const paymentMethodSelect = document.getElementById('paymentMethod');
+    const paymentNumberContainer = document.getElementById('paymentNumberContainer');
+    const paymentNumberInput = document.getElementById('paymentNumber');
+
+    const workingHoursSelect = document.getElementById('workingHours');
+    const timeSlotContainer = document.getElementById('timeSlotContainer');
+    const timeSlotCheckboxes = document.getElementById('timeSlotCheckboxes');
+    const timeSlotError = document.getElementById('timeSlotError');
+
+    // ▼▼▼ গুরুত্বপূর্ণ: Canvas-এর "Google Sheet সংযোগ এবং সমস্যা সমাধানের গাইড" থেকে আপনার Web App URL টি এখানে পেস্ট করুন ▼▼▼
+    const googleAppScriptURL = 'https://script.google.com/macros/s/AKfycbwX_n1ef7dyAKhvrc8A2BGypeJQlGQktYv_hJKEcZhYjmrBi9gvU11cWzHvYAIBxFYl/exec';
+    // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+    const timeSlots = {
+        Morning: ['8 AM – 12 PM', '9 AM – 1 PM', '10 AM – 2 PM'],
+        Evening: ['2 PM – 6 PM', '3 PM – 7 PM', '4 PM – 8 PM'],
+        Night: ['6 PM – 10 PM', '7 PM – 11 PM', '8 PM – 12 AM']
+    };
+
+    paymentMethodSelect.addEventListener('change', (e) => {
+        const selectedValue = e.target.value;
+        if (selectedValue === 'bKash' || selectedValue === 'Nagad') {
+            paymentNumberContainer.classList.remove('hidden');
+            paymentNumberInput.required = true;
+        } else {
+            paymentNumberContainer.classList.add('hidden');
+            paymentNumberInput.required = false;
+        }
+    });
+
+    workingHoursSelect.addEventListener('change', (e) => {
+        const selectedValue = e.target.value;
+        timeSlotCheckboxes.innerHTML = '';
+        timeSlotError.classList.add('hidden');
+        
+        if (timeSlots[selectedValue]) {
+            timeSlotContainer.classList.remove('hidden');
+            
+            timeSlots[selectedValue].forEach(slot => {
+                const checkboxId = `slot-${slot.replace(/\s/g, '')}`;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex items-center';
+                wrapper.innerHTML = `
+                    <input type="checkbox" id="${checkboxId}" name="timeSlot" value="${slot}" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="${checkboxId}" class="ml-3 block text-sm text-slate-700 bangla">${slot}</label>
+                `;
+                timeSlotCheckboxes.appendChild(wrapper);
+            });
+        } else {
+            timeSlotContainer.classList.add('hidden');
+        }
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        let isTimeSlotValid = true;
+        if (!timeSlotContainer.classList.contains('hidden')) {
+            const checkedSlots = form.querySelectorAll('input[name="timeSlot"]:checked');
+            if (checkedSlots.length === 0) {
+                isTimeSlotValid = false;
+                timeSlotError.classList.remove('hidden');
+            } else {
+                timeSlotError.classList.add('hidden');
+            }
+        }
+
+        if (!isTimeSlotValid) {
+            return; 
+        }
+
+        btnText.classList.add('hidden');
+        loader.classList.remove('hidden');
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const timeSlotValues = Array.from(formData.getAll('timeSlot')).join(', ');
+        formData.set('timeSlot', timeSlotValues);
+
+        fetch(googleAppScriptURL, { method: 'POST', body: formData})
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text || 'Network response was not ok.') });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.result === 'success') {
+                    form.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                } else {
+                    throw new Error(data.error || 'Unknown error from Apps Script');
+                }
+            })
+            .catch(error => {
+                console.error('Submission Error Details:', error);
+                const errorDetailsP = document.querySelector('#error-message p');
+                if (errorDetailsP) {
+                    let errorMessageText = error.message || JSON.stringify(error);
+                    errorDetailsP.innerHTML = `তথ্য জমা দেওয়ার সময় একটি সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন। <br><small class="text-xs text-red-500 mt-2 block bangla">ত্রুটির বিবরণ: ${errorMessageText}</small>`;
+                }
+                form.classList.add('hidden');
+                errorMessage.classList.remove('hidden');
+            })
+            .finally(() => {
+                btnText.classList.remove('hidden');
+                loader.classList.add('hidden');
+                submitBtn.disabled = false;
+            });
+    });
+
+    function resetForm() {
+        form.reset();
+        form.classList.remove('hidden');
+        successMessage.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        paymentNumberContainer.classList.add('hidden');
+        paymentNumberInput.required = false;
+        timeSlotContainer.classList.add('hidden');
+        timeSlotCheckboxes.innerHTML = '';
+        timeSlotError.classList.add('hidden');
+    }
+
+</script>
+
+</body>
+</html>
