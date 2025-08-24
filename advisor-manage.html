@@ -173,25 +173,7 @@
             nameField.classList.toggle('hidden', isLoginMode);
         });
 
-        googleSignInBtn.addEventListener('click', async () => {
-            try {
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-
-                if (!userDoc.exists()) {
-                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
-                    await setDoc(userDocRef, {
-                        name: user.displayName,
-                        email: user.email,
-                        role: role
-                    });
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        });
+        googleSignInBtn.addEventListener('click', () => signInWithPopup(auth, provider).catch(error => alert(error.message)));
 
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -220,25 +202,22 @@
         document.getElementById('leader-logout-btn').addEventListener('click', () => signOut(auth));
         document.getElementById('advisor-logout-btn').addEventListener('click', () => signOut(auth));
 
-        onAuthStateChanged(auth, async (user) => {
+        async function handleUserSession(user) {
             if (user) {
                 const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-                
-                let userData;
-                if (userDoc.exists()) {
-                    userData = userDoc.data();
-                } else {
-                    // This case handles new users who just signed up.
+                let userDoc = await getDoc(userDocRef);
+
+                if (!userDoc.exists()) {
                     const role = user.email === leaderEmail ? 'leader' : 'advisor';
-                    userData = {
-                        name: user.displayName || 'New User',
+                    await setDoc(userDocRef, {
+                        name: user.displayName || document.getElementById('name').value || 'New User',
                         email: user.email,
                         role: role
-                    };
-                    await setDoc(userDocRef, userData);
+                    });
+                    userDoc = await getDoc(userDocRef); // Re-fetch after creation
                 }
-
+                
+                const userData = userDoc.data();
                 if (userData.role === 'leader') {
                     showView('leader');
                     initLeaderDashboard();
@@ -246,11 +225,12 @@
                     showView('advisor');
                     initAdvisorDashboard(user.uid);
                 }
-
             } else {
                 showView('auth');
             }
-        });
+        }
+
+        onAuthStateChanged(auth, handleUserSession);
         
         function showView(viewName) {
             Object.values(views).forEach(v => v.style.display = 'none');
