@@ -15,31 +15,43 @@
         .kanban-column { min-height: 60vh; }
         .lead-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
         .lead-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .gemini-loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #a21caf;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <!-- Login View -->
+    <!-- Login/Register View -->
     <div id="auth-view" class="view min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-sm bg-white p-8 rounded-2xl shadow-lg text-center">
-            <h2 class="text-3xl font-bold mb-2">Welcome Back</h2>
-            <p class="text-slate-600 mb-8">Sign in to continue</p>
-            <button id="google-signin-btn" class="w-full bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-lg flex items-center justify-center gap-3 transition-all duration-300">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+            <h2 id="auth-title" class="text-3xl font-bold text-center mb-6">Login</h2>
+            
+            <!-- Google Sign-in Button -->
+            <button id="google-signin-btn" class="w-full bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-lg flex items-center justify-center gap-3 transition-all duration-300 mb-4">
                 <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.012,36.49,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
                 Sign in with Google
             </button>
+            <div class="my-4 flex items-center before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+                <p class="text-center font-semibold mx-4">OR</p>
+            </div>
+
+            <!-- Email/Password Form -->
+            <form id="authForm">
+                <div id="name-field" class="mb-4 hidden">
+                    <label for="name" class="block text-sm font-medium text-slate-700">আপনার নাম</label>
+                    <input type="text" id="name" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-slate-700">ইমেইল</label>
+                    <input type="email" id="email" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-slate-700">পাসওয়ার্ড</label>
+                    <input type="password" id="password" required class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3">
+                </div>
+                <button type="submit" id="auth-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">Login</button>
+            </form>
+            <p class="text-center text-sm mt-4">
+                <a href="#" id="toggle-auth-mode" class="text-indigo-600 hover:underline">অ্যাডভাইজর হিসেবে রেজিস্টার করুন</a>
+            </p>
         </div>
     </div>
 
@@ -52,20 +64,9 @@
             </div>
         </header>
         <main class="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-1 space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4">Registered Advisors</h2>
-                    <ul id="advisor-list" class="space-y-2 max-h-60 overflow-y-auto"></ul>
-                </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4">Performance Summary (AI)</h2>
-                    <p class="text-sm text-slate-600 mb-4">যেকোনো অ্যাডভাইজরের পারফরম্যান্স সারাংশ তৈরি করুন।</p>
-                    <select id="gemini-advisor-select" class="block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3 mb-3"></select>
-                    <button id="generate-summary-btn" class="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2">
-                        <span id="gemini-btn-text">Generate Summary</span>
-                        <div id="gemini-loader" class="gemini-loader hidden"></div>
-                    </button>
-                </div>
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Registered Advisors</h2>
+                <ul id="advisor-list" class="space-y-2 max-h-96 overflow-y-auto"></ul>
             </div>
             <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
                 <h2 class="text-xl font-bold mb-4">Manage Leads</h2>
@@ -112,19 +113,10 @@
         </main>
     </div>
 
-    <!-- Modal for showing messages -->
-    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
-        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h3 id="modal-title" class="text-xl font-bold mb-4">Notification</h3>
-            <p id="modal-message" class="text-slate-700"></p>
-            <button id="modal-close" class="mt-6 w-full bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">OK</button>
-        </div>
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, query, where, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, query, where, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyA99KYGeReTFF9v9-0yVnuANrQlyzRlFUM",
@@ -146,28 +138,41 @@
             leader: document.getElementById('leader-dashboard'),
             advisor: document.getElementById('advisor-dashboard')
         };
-        const leaderEmail = 'leader@gainersfuture.com';
+        const leaderEmail = 'gainersfuture@gmail.com';
 
-        // --- UI Elements ---
+        // --- Auth Elements ---
+        const authForm = document.getElementById('authForm');
+        const authTitle = document.getElementById('auth-title');
+        const nameField = document.getElementById('name-field');
+        const authBtn = document.getElementById('auth-btn');
+        const toggleAuthMode = document.getElementById('toggle-auth-mode');
         const googleSignInBtn = document.getElementById('google-signin-btn');
+        let isLoginMode = true;
+        
+        // --- Leader Elements ---
         const advisorList = document.getElementById('advisor-list');
         const csvFileInput = document.getElementById('csv-file-input');
         const unassignedLeadsList = document.getElementById('unassigned-leads-list');
         const assignAdvisorSelect = document.getElementById('assign-advisor-select');
-        const geminiAdvisorSelect = document.getElementById('gemini-advisor-select');
         const assignLeadsBtn = document.getElementById('assign-leads-btn');
-        const generateSummaryBtn = document.getElementById('generate-summary-btn');
+
+        // --- Advisor Elements ---
         const kanbanColumns = {
             new: document.getElementById('new-column'),
             contacted: document.getElementById('contacted-column'),
             converted: document.getElementById('converted-column')
         };
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalMessage = document.getElementById('modal-message');
-        const modalClose = document.getElementById('modal-close');
 
         // --- Auth Logic ---
+        toggleAuthMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            authTitle.textContent = isLoginMode ? 'Login' : 'Register as Advisor';
+            authBtn.textContent = isLoginMode ? 'Login' : 'Register';
+            toggleAuthMode.textContent = isLoginMode ? 'অ্যাডভাইজর হিসেবে রেজিস্টার করুন' : 'Already have an account? Login';
+            nameField.classList.toggle('hidden', isLoginMode);
+        });
+
         googleSignInBtn.addEventListener('click', async () => {
             try {
                 const result = await signInWithPopup(auth, provider);
@@ -188,12 +193,38 @@
             }
         });
 
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+
+            try {
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
+                    await setDoc(doc(db, "users", user.uid), {
+                        name: name,
+                        email: email,
+                        role: role
+                    });
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
         document.getElementById('leader-logout-btn').addEventListener('click', () => signOut(auth));
         document.getElementById('advisor-logout-btn').addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                const userDoc = await getDoc(doc(db, "users", user.uid));
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+                
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     if (userData.role === 'leader') {
@@ -203,6 +234,16 @@
                         showView('advisor');
                         initAdvisorDashboard(user.uid);
                     }
+                } else {
+                    // This case handles users who signed up before the role was set.
+                    const role = user.email === leaderEmail ? 'leader' : 'advisor';
+                    await setDoc(userDocRef, {
+                        name: user.displayName || 'New User',
+                        email: user.email,
+                        role: role
+                    });
+                    // Re-check after setting the role
+                    onAuthStateChanged(auth, () => {}); // A simple way to re-trigger
                 }
             } else {
                 showView('auth');
@@ -217,13 +258,6 @@
                 views[viewName].style.display = 'block';
             }
         }
-        
-        function showModal(title, message) {
-            modalTitle.textContent = title;
-            modalMessage.innerHTML = message;
-            modal.classList.remove('hidden');
-        }
-        modalClose.addEventListener('click', () => modal.classList.add('hidden'));
 
         // --- Leader Dashboard Logic ---
         function initLeaderDashboard() {
@@ -232,7 +266,6 @@
             onSnapshot(q, (snapshot) => {
                 advisorList.innerHTML = '';
                 assignAdvisorSelect.innerHTML = '<option value="">Select Advisor</option>';
-                geminiAdvisorSelect.innerHTML = '<option value="">Select Advisor for Summary</option>';
                 snapshot.forEach(doc => {
                     const advisor = { id: doc.id, ...doc.data() };
                     const li = document.createElement('li');
@@ -240,15 +273,10 @@
                     li.className = 'text-sm p-2 bg-slate-50 rounded';
                     advisorList.appendChild(li);
 
-                    const option1 = document.createElement('option');
-                    option1.value = advisor.id;
-                    option1.textContent = advisor.name;
-                    assignAdvisorSelect.appendChild(option1);
-                    
-                    const option2 = document.createElement('option');
-                    option2.value = advisor.id;
-                    option2.textContent = advisor.name;
-                    geminiAdvisorSelect.appendChild(option2);
+                    const option = document.createElement('option');
+                    option.value = advisor.id;
+                    option.textContent = advisor.name;
+                    assignAdvisorSelect.appendChild(option);
                 });
             });
             
@@ -286,7 +314,7 @@
                     }
                 });
                 await batch.commit();
-                showModal('Success', `${rows.length} leads imported successfully!`);
+                alert(`${rows.length} leads imported successfully!`);
             };
             reader.readAsText(file);
         });
@@ -294,13 +322,13 @@
         assignLeadsBtn.addEventListener('click', async () => {
             const selectedAdvisorId = assignAdvisorSelect.value;
             if (!selectedAdvisorId) {
-                showModal('Error', "Please select an advisor.");
+                alert("Please select an advisor.");
                 return;
             }
             const selectedAdvisorName = assignAdvisorSelect.options[assignAdvisorSelect.selectedIndex].text;
             const selectedLeads = document.querySelectorAll('.lead-checkbox:checked');
             if (selectedLeads.length === 0) {
-                showModal('Error', "Please select at least one lead to assign.");
+                alert("Please select at least one lead to assign.");
                 return;
             }
 
@@ -311,7 +339,7 @@
                 batch.update(leadRef, { status: 'new', assignedToId: selectedAdvisorId, assignedToName: selectedAdvisorName });
             });
             await batch.commit();
-            showModal('Success', `${selectedLeads.length} leads assigned to ${selectedAdvisorName}.`);
+            alert(`${selectedLeads.length} leads assigned to ${selectedAdvisorName}.`);
         });
 
         // --- Advisor Dashboard Logic ---
@@ -363,64 +391,6 @@
                 await setDoc(leadRef, { status: newStatus }, { merge: true });
             }
         });
-        
-        // --- Gemini API Logic ---
-        async function callGeminiAPI(prompt) {
-            const apiKey = ""; // Leave empty
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-            const result = await response.json();
-            return result.candidates[0].content.parts[0].text;
-        }
-
-        generateSummaryBtn.addEventListener('click', async () => {
-            const advisorId = geminiAdvisorSelect.value;
-            const advisorName = geminiAdvisorSelect.options[geminiAdvisorSelect.selectedIndex].text;
-            if (!advisorId) {
-                showModal('Error', 'Please select an advisor.');
-                return;
-            }
-
-            document.getElementById('gemini-btn-text').classList.add('hidden');
-            document.getElementById('gemini-loader').classList.remove('hidden');
-            generateSummaryBtn.disabled = true;
-
-            try {
-                const leadsRef = collection(db, "leads");
-                const q = query(leadsRef, where("assignedToId", "==", advisorId));
-                const querySnapshot = await getDocs(q);
-                
-                let totalLeads = 0;
-                let contacted = 0;
-                let converted = 0;
-                querySnapshot.forEach(doc => {
-                    totalLeads++;
-                    const data = doc.data();
-                    if (data.status === 'contacted') contacted++;
-                    if (data.status === 'converted') converted++;
-                });
-
-                const prompt = `Generate a brief weekly performance summary in Bengali for a tele-sales advisor named '${advisorName}'. Data: Total assigned leads: ${totalLeads}, Leads contacted: ${contacted}, Leads successfully converted: ${converted}. The summary should be professional, concise, and suitable for a management report.`;
-                
-                const summary = await callGeminiAPI(prompt);
-                showModal(`Performance Summary for ${advisorName}`, summary.replace(/\n/g, '<br>'));
-
-            } catch (error) {
-                showModal('Error', `Failed to generate summary: ${error.message}`);
-            } finally {
-                document.getElementById('gemini-btn-text').classList.remove('hidden');
-                document.getElementById('gemini-loader').classList.add('hidden');
-                generateSummaryBtn.disabled = false;
-            }
-        });
-
     </script>
 </body>
 </html>
-
