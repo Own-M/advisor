@@ -225,26 +225,28 @@
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
                 
+                let userData;
                 if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    if (userData.role === 'leader') {
-                        showView('leader');
-                        initLeaderDashboard();
-                    } else {
-                        showView('advisor');
-                        initAdvisorDashboard(user.uid);
-                    }
+                    userData = userDoc.data();
                 } else {
-                    // This case handles users who signed up before the role was set.
+                    // This case handles new users who just signed up.
                     const role = user.email === leaderEmail ? 'leader' : 'advisor';
-                    await setDoc(userDocRef, {
+                    userData = {
                         name: user.displayName || 'New User',
                         email: user.email,
                         role: role
-                    });
-                    // Re-check after setting the role
-                    onAuthStateChanged(auth, () => {}); // A simple way to re-trigger
+                    };
+                    await setDoc(userDocRef, userData);
                 }
+
+                if (userData.role === 'leader') {
+                    showView('leader');
+                    initLeaderDashboard();
+                } else {
+                    showView('advisor');
+                    initAdvisorDashboard(user.uid);
+                }
+
             } else {
                 showView('auth');
             }
