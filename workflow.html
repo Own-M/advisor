@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gainers Future - Detailed Call Script Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .step-icon {
+            background-color: #118AB2;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        details > summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .arrow {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- 
+    Selected Palette: Energetic & Playful
+    #FF6B6B (Coral Red)
+    #FFD166 (Sunny Yellow)
+    #06D6A0 (Turquoise Green)
+    #118AB2 (Cerulean Blue)
+    #073B4C (Midnight Blue)
+    -->
+
+    <!-- 
+    Narrative Plan:
+    1.  Header: Title of the infographic.
+    2.  Call Flow Section: A detailed step-by-step guide of the conversation with elaborated key points using dropdowns for clarity.
+    3.  Challenges Chart: Visualize student problems.
+    4.  Team Workflow Deep Dive: A dedicated section explaining the roles of Research, Email, and Documentation teams.
+    5.  Value Proposition: Highlight savings and success rate.
+    6.  Packages & Payment: Clear comparison and installment details.
+    7.  Objection Handling: Quick reference for common questions.
+    8.  Footer: Closing statement.
+    -->
+
+    <!-- 
+    Visualization Choices:
+    1.  Call Flow -> Goal: Organize -> Visualization: Step-by-step list with icons and interactive dropdowns. Justification: Provides a clean, comprehensive, and user-friendly script. Implemented with HTML/CSS (NO SVG, NO Mermaid JS).
+    2.  Student Challenges -> Goal: Compare -> Visualization: Bar Chart. Justification: Best for comparing distinct problems. Implemented with Chart.js (NO SVG).
+    3.  Team Workflow -> Goal: Organize -> Visualization: Card-based layout. Justification: Clearly separates the functions of each team. Implemented with HTML/CSS (NO SVG).
+    
+    Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output.
+    -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#073B4C] mb-2">Gainers Future: Advisor Call Flow Guide</h1>
+            <p class="text-xl md:text-2xl text-[#118AB2]">ক্লায়েন্টের সাথে প্রতিটি কথোপকথন সফল করার বিস্তারিত গাইডলাইন</p>
+        </header>
+
+        <main class="space-y-8">
+
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] text-center mb-6">সম্পূর্ণ কল ফ্লো: ৮টি ধাপে বিস্তারিত কথোপকথন</h2>
+                <div class="space-y-4">
+                    
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                            <div class="flex items-center space-x-4">
+                                <div class="step-icon">১</div>
+                                <h3>সূচনা (Opening)</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <p>"আসসালামু আলাইকুম, Gainers Future থেকে বলছিলাম..."</p>
+                             <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">Keyword (ফর্ম পূরণকারীর জন্য):</p>
+                                <p>ক্লায়েন্টকে মনে করিয়ে দিন: "আপনি আমাদের সাপোর্ট ফর্ম পূরণ করেছিলেন, **ফুল-ফান্ডেড স্কলারশিপ** সম্পর্কে জানতে..."</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">২</div>
+                                <h3>পরিচয় ও অবস্থান স্পষ্টকরণ</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <p>পরিষ্কারভাবে বলুন: "আমরা কোনো এজেন্সি নই, আপনার অ্যাপ্লিকেশন পার্টনার এবং শুধুমাত্র ফুল-ফান্ডেড স্কলারশিপ নিয়ে কাজ করি।"</p>
+                            <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">ক্লায়েন্ট জিজ্ঞাসা করতে পারে: "কী কী স্কলারশিপ নিয়ে কাজ করেন?"</p>
+                                <p>**উত্তর:** আমরা মূলত ৪ ধরনের ফুল-ফান্ডেড স্কলারশিপ নিয়ে কাজ করি: **Government Scholarship, Professor Funding, University Merit-Based Scholarship, এবং GA/TA/RA (Graduate/Teaching/Research Assistantship)**.</p>
+                            </div>
+                             <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">গুরুত্বপূর্ণ পয়েন্ট: Client Contribution</p>
+                                <p>বলুন: "সম্পূর্ণ প্রসেসটি আমরা আপনার **Contribution** বা অংশগ্রহণের মাধ্যমে সম্পন্ন করে থাকি। যেহেতু স্কলারশিপ অ্যাপ্লিকেশন একটি জটিল প্রক্রিয়া, তাই আপনার সক্রিয় অংশগ্রহণ ছাড়া আমরা এটি সফলভাবে সম্পন্ন করতে পারবো না।"</p>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৩</div>
+                                <h3>প্রোফাইল ও চ্যালেঞ্জ জিজ্ঞাসা</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5">
+                            <p>ক্লায়েন্টের প্রোফাইল সম্পর্কে জানুন এবং জিজ্ঞাসা করুন: "স্কলারশিপ পাওয়ার জন্য আপনার সবচেয়ে বড় চ্যালেঞ্জ কী মনে হয়?"</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৪</div>
+                                <h3>সমস্যা ও আমাদের সমাধান উপস্থাপন</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <p>সাধারণ চ্যালেঞ্জগুলো (গাইডলাইন, স্বচ্ছতা, খরচ, সময়) উল্লেখ করুন।</p>
+                             <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">বর্তমান পরিস্থিতি ব্যাখ্যা করুন:</p>
+                                <p>"বাংলাদেশ থেকে সবচেয়ে বেশি স্কলারশিপ আসে **প্রফেসরের মাধ্যমে আবেদন** করে। কিন্তু আমাদের দেশে অনেক এজেন্সি **Self-Fund** নিয়ে কাজ করে, যেখানে শিক্ষার্থীদের কোটি টাকা খরচ হয়। দ্রুত লাভের আশায় তারা ফুল-ফান্ডেড স্কলারশিপের বিষয়টি আড়াল করে রাখে।"</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">আমাদের সমাধান:</p>
+                                <p>"আমরা ঠিক এই সমস্যাগুলোই সমাধান করছি। আপনার জন্য একজন **ডেডিকেটেড ইন্সট্রাকটর** থাকবেন, যিনি পুরো জার্নিতে আপনাকে গাইড করবেন এবং আমাদের টিমের কাছ থেকে আপনার কাজগুলো সময়মতো আদায় করবেন।"</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৫</div>
+                                <h3>কার্য প্রক্রিয়া ব্যাখ্যা (টিম ওয়ার্ক)</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5">
+                            <p>আমাদের ৩টি বিশেষজ্ঞ টিম আপনার জন্য কীভাবে কাজ করবে তা বিস্তারিত বলুন। (নিচের 'টিম ওয়ার্কের বিস্তারিত ব্যাখ্যা' সেকশনে বিস্তারিত দেখুন)</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৬</div>
+                                <h3>সার্ভিস সমাপ্তি এবং চূড়ান্ত ধাপ</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <p>বলুন: "আপনার সকল ডকুমেন্টস রেডি এবং AI রিপোর্টসহ এক্সপার্ট রিভিউতে পাঠানো হবে। প্রফেসর ফান্ডিং নিশ্চিত হলে, আমরা বিশ্ববিদ্যালয়ের পোর্টালে আবেদন জমা দিয়ে দেব এবং আপনি অফার লেটার পাবেন।"</p>
+                            <div class="bg-[#FFD166]/20 p-3 rounded-lg border-l-4 border-[#FFD166]">
+                                <p class="font-bold text-lg text-[#073B4C]">Top Key-Point: Application Fee Waiver</p>
+                                <p>"আমরা আপনার আবেদন ফি (যা প্রায় ১০০-১৫০ ডলার) Waiver করার জন্য প্রফেসর এবং অ্যাডমিশন কমিটিকে ইমেইল করে সর্বোচ্চ চেষ্টা করি। এতে আপনার প্রায় **১ থেকে ১.৫ লক্ষ টাকা সেভ** হতে পারে।"</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৭</div>
+                                <h3>প্যাকেজ ও পেমেন্ট</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <p>"আমাদের দুটি সাশ্রয়ী প্যাকেজ আছে: ২৫ হাজার এবং ৫০ হাজার টাকা। পেমেন্ট একবারে দিতে হবে না।"</p>
+                             <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">Installment Details:</p>
+                                <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="font-medium text-gray-700">Pro Package (3 Installments)</p>
+                                        <ul class="list-decimal list-inside mt-1 text-sm">
+                                            <li><strong>1st Installment:</strong> Enrollment Fee</li>
+                                            <li><strong>2nd Installment:</strong> After Documentation Completion</li>
+                                            <li><strong>3rd Installment:</strong> After Emailing Phase</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-700">Elite Package (4 Installments)</p>
+                                        <ul class="list-decimal list-inside mt-1 text-sm">
+                                            <li><strong>1st Installment:</strong> Enrollment Fee</li>
+                                            <li><strong>2nd Installment:</strong> After Documentation Completion</li>
+                                            <li><strong>3rd Installment:</strong> After Emailing Phase</li>
+                                            <li><strong>4th Installment:</strong> Before Final Submission</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="bg-gray-50 rounded-lg p-4">
+                        <summary class="flex items-center justify-between font-bold text-lg text-[#073B4C]">
+                             <div class="flex items-center space-x-4">
+                                <div class="step-icon">৮</div>
+                                <h3>আপত্তি মোকাবেলা ও ক্লোজিং</h3>
+                            </div>
+                            <span class="arrow transition-transform duration-200">&#9654;</span>
+                        </summary>
+                        <div class="mt-4 pl-14 text-gray-600 border-l-2 border-gray-200 ml-5 pl-5 space-y-4">
+                            <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">দায়িত্ববোধ ও সততা:</p>
+                                <p>বলুন: "ভাইয়া/আপু, এইটা আপনার একটা স্বপ্ন, আর আপনার সাফল্য মানে আমাদের সাফল্য। আমরা এই দায়িত্ববোধ থেকেই কাজ করি। আমাদের সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো, আমরা **'না' বলতে জানি**। কারো প্রোফাইল স্কলারশিপের জন্য প্রস্তুত না হলে, আমরা শুরুতেই জানিয়ে দেই, যেন তিনি झूठा স্বপ্ন নিয়ে বসে না থাকেন।"</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">যদি ক্লায়েন্ট বলে: "আমি পরে জানাচ্ছি"</p>
+                                <p>**উত্তর:** "অবশ্যই। এটি একটি গুরুত্বপূর্ণ সিদ্ধান্ত, তাই সময় নিয়ে ভাবাটাই স্বাভাবিক। তবে, স্কলারশিপের আবেদন খুবই **সময়-নির্ভর** একটি প্রক্রিয়া। প্রফেসরদের ফান্ডিং এবং বিশ্ববিদ্যালয়ের আসন সীমিত থাকে। যারা আগে যোগাযোগ করে, তারা সবসময় এগিয়ে থাকে।"</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border">
+                                <p class="font-semibold">জরুরি অবস্থা ও সীমাবদ্ধতা:</p>
+                                <p>বলুন: "আমাদেরও সীমাবদ্ধতা আছে, আমরা **লিমিটেড প্রোফাইল** নিয়ে কাজ করি। আমাদের এই সপ্তাহের স্লট প্রায় শেষ। আপনি যদি আগ্রহী হন, একটু তাড়াতাড়ি জানাবেন, কারণ স্লট পূর্ণ হয়ে গেলে আমরা আর সাহায্য করতে পারবো না।"</p>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] text-center mb-6">টিম ওয়ার্কের বিস্তারিত ব্যাখ্যা (ধাপ ৫ এর জন্য)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">১. রিসার্চ টিম</h3>
+                        <p class="mt-2 text-gray-600">আপনার দেশ ও বিষয়ের পছন্দের উপর ভিত্তি করে এই টিম দুটি লিস্ট তৈরি করবে:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
+                            <li><strong>অপরচুনিটি লিস্ট:</strong> ইউনিভার্সিটির নাম, ডেডলাইন, ফান্ডিং স্ট্যাটাস।</li>
+                            <li><strong>প্রফেসর লিস্ট:</strong> প্রফেসরের নাম, প্রোফাইল লিঙ্ক, রিসার্চ ইন্টারেস্ট।</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">২. ইমেইল কমিউনিকেশন টিম</h3>
+                        <p class="mt-2 text-gray-600">এই টিম আপনার জন্য প্রফেসরদের সাথে যোগাযোগ স্থাপন করবে এবং ফান্ডিং নিশ্চিত করার জন্য মিটিং ঠিক করবে।</p>
+                        <p class="mt-2 font-semibold">সাধারণ প্রশ্ন:</p>
+                         <ul class="list-disc list-inside mt-1 space-y-1 text-gray-600">
+                            <li>কতজন প্রফেসরকে ইমেইল করা হবে?</li>
+                            <li>মিটিং-এ সাপোর্ট থাকবে কি?</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">৩. ডকুমেন্টেশন টিম</h3>
+                        <p class="mt-2 text-gray-600">আপনার লিখিত টাস্কের উপর ভিত্তি করে এই টিম তৈরি করবে:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
+                            <li><strong>SOP:</strong> ইউনিক এবং ১০০% হিউম্যান-রিটেন (AI রিপোর্ট সহ)।</li>
+                            <li><strong>LOR:</strong> ৩টি আন্তর্জাতিক ফরম্যাটের ড্রাফট।</li>
+                            <li><strong>CV:</strong> ওয়ান-পেজ এবং Europass ফরম্যাট।</li>
+                            <li><strong>অন্যান্য ডকুমেন্ট:</strong> প্রয়োজনে রিসার্চ প্রপোজাল ইত্যাদি।</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] text-center mb-6">সাধারণ প্রশ্ন ও তার মূল উত্তর (ধাপ ৮ এর সাপোর্টিং)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">প্রশ্ন: খরচ বেশি মনে হচ্ছে।</h3>
+                        <p class="mt-2 text-gray-600">**উত্তর:** "এটিকে খরচ না ভেবে ভবিষ্যতের জন্য একটি বিনিয়োগ হিসেবে দেখুন। এই বিনিয়োগ আপনার লক্ষ লক্ষ টাকা সাশ্রয় করবে।"</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">প্রশ্ন: সফলতার নিশ্চয়তা কী?</h3>
+                        <p class="mt-2 text-gray-600">**উত্তর:** "কেউই ১০০% নিশ্চয়তা দিতে পারে না, তবে আমাদের সফলতার হার ৮৫%। আমরা আপনার প্রোফাইল অনুযায়ী সেরা অ্যাপ্লিকেশনটি তৈরি করার গ্যারান্টি দিচ্ছি।"</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">প্রশ্ন: আপনাদের অফিস কোথায়?</h3>
+                        <p class="mt-2 text-gray-600">**উত্তর:** "মিরপুর এবং উত্তরায় আমাদের এক্সিকিউটিভ অফিস আছে। প্রতি শনিবার অ্যাপয়েন্টমেন্ট নিয়ে দেখা করা সম্ভব।"</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-[#073B4C]">প্রশ্ন: কতদিন সময় লাগবে?</h3>
+                        <p class="mt-2 text-gray-600">**উত্তর:** "সাধারণত ২ মাসের মধ্যে আপনার সব ডকুমেন্ট রেডি হয়ে যাবে এবং আবেদন প্রক্রিয়া শুরু হবে।"</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-lg text-[#073B4C]">এই ফ্লো অনুসরণ করে প্রতিটি কলকে সফল করুন!</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function wrapLabels(label, maxLength) {
+            if (typeof label !== 'string' || label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+    </script>
+</body>
+</html>
